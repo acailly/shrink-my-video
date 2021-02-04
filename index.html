@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shrink my video</title>
+  </head>
+  <body>
+    <h1>Shrink my video!</h1>
+    <p>
+      This is a quick and opinionated way to reduce video size by limiting
+      quality.
+    </p>
+    <p>
+      This approach is inspired by image dithering (see
+      <a href="https://ditherit.com/" target="_blank">here</a> for an example),
+      which preserve essential meaning of the image but removes a lot of data
+    </p>
+    <p>This tool applies the following limits to your video:</p>
+    <ul>
+      <li>set video resolution to 480p (852x480)</li>
+      <li>set audio bitrate to 56 kbits/s</li>
+      <li>lower the FPS to 1 image every 5 seconds</li>
+    </ul>
+    <details>
+      <summary>Click me to show some technical details</summary>
+      <p>
+        This tool uses
+        <a href="https://ffmpegwasm.github.io/" target="_blank">FFMPEG.WASM</a>
+        to apply the following parameters to the video:
+      </p>
+      <pre><code>ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4</code></pre>
+      <p>
+        You can dowload <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
+        to try these settings directly on your computer
+      </p>
+    </details>
+    <p>
+      These settings should be acceptable for conference videos or similar types
+      of videos where the same image often stays onscreen during serveral
+      seconds
+    </p>
+    <label for="uploader">Import your file</label>
+    <input type="file" id="uploader" />
+    <video id="player" controls></video>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
+    <script>
+      const { createFFmpeg, fetchFile } = FFmpeg;
+      const ffmpeg = createFFmpeg({ log: true });
+      const transcode = async ({ target: { files } }) => {
+        const { name } = files[0];
+        await ffmpeg.load();
+        ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
+        //ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4
+        await ffmpeg.run(
+          "-i",
+          name,
+          "-s",
+          "hd480",
+          "-filter:v",
+          "fps=fps=1/5",
+          "-c:a",
+          "aac",
+          "-b:a",
+          "56k",
+          "output.mp4"
+        );
+        const data = ffmpeg.FS("readFile", "output.mp4");
+        const video = document.getElementById("player");
+        video.src = URL.createObjectURL(
+          new Blob([data.buffer], { type: "video/mp4" })
+        );
+      };
+      document.getElementById("uploader").addEventListener("change", transcode);
+    </script>
+  </body>
+</html>
