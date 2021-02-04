@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shrink my video</title>
+    <link rel="stylesheet" href="almond.css" />
   </head>
   <body>
     <h1>Shrink my video!</h1>
@@ -40,8 +41,10 @@
       of videos where the same image often stays onscreen during serveral
       seconds
     </p>
-    <label for="uploader">Import your file</label>
-    <input type="file" id="uploader" />
+    <form>
+      <label for="uploader">Import your file</label>
+      <input type="file" id="uploader" />
+    </form>
     <video id="player" controls></video>
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
     <script>
