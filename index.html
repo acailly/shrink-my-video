@@ -3,15 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shrink my video</title>
-    <!-- <link rel="stylesheet" href="almond.css" /> -->
+
+    <!-- Browser title -->
+    <title>Shrink my video!</title>
+
+    <!-- Style -->
     <link rel="stylesheet" href="mvp.css" />
+
+    <!-- PWA configuration -->
+    <!-- Inspired by https://github.com/yannbertrand/pwa-demo -->
+    <!-- This part was generated with https://realfavicongenerator.net/ -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="icons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta name="msapplication-TileColor" content="#ffc40d" />
+    <meta name="msapplication-config" content="icons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- This part was generated with https://appsco.pe/developer/splash-screens -->
+    <link
+      href="splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+
+    <!-- Filled with help from https://www.heymeta.com/ -->
+
+    <!-- HTML Meta Tags -->
+    <meta name="Description" content="Online video size reducer" />
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Shrink my video!" />
+    <meta itemprop="description" content="Online video size reducer" />
+    <meta
+      itemprop="image"
+      content="https://acailly.github.io/shrink-my-video/icons/android-chrome-192x192.png"
+    />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:title" content="Shrink my video!" />
+    <meta property="og:description" content="Online video size reducer" />
+    <meta
+      property="og:image"
+      content="https://acailly.github.io/shrink-my-video/icons/android-chrome-192x192.png"
+    />
+    <meta property="og:image:width" content="220" />
+    <meta property="og:image:height" content="201" />
+    <meta
+      property="og:url"
+      content="https://acailly.github.io/shrink-my-video/"
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:title" content="Shrink my video!" />
+    <meta name="twitter:description" content="Online video size reducer" />
+    <meta
+      name="twitter:image"
+      content="https://acailly.github.io/shrink-my-video/icons/android-chrome-192x192.png"
+    />
+    <meta name="twitter:image:alt" content="Logo of Shrink my video! tool" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <header>
       <nav>
-        <a href="https://andybrewer.github.io/mvp/"
-          ><img alt="MVP.css" src="./img/logo.png" height="70"
+        <a href="https://acailly.github.io/shrink-my-video/"
+          ><img
+            alt="Shrink my video!"
+            src="icons/android-chrome-192x192.png"
+            height="70"
         /></a>
         <ul>
           <li>Home</li>
@@ -71,45 +193,86 @@
             />
             <label for="image-every-5-seconds">One image every 5 seconds</label>
           </div>
-          <label>Here is your shrinked video!</label>
-          <video id="player" controls></video>
-          <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
-          <script>
-            const { createFFmpeg, fetchFile } = FFmpeg;
-            const ffmpeg = createFFmpeg({ log: true });
-            const transcode = async ({ target: { files } }) => {
-              const { name } = files[0];
-              await ffmpeg.load();
-              ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
-              //ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4
-              await ffmpeg.run(
-                "-i",
-                name,
-                "-s",
-                "hd480",
-                "-filter:v",
-                "fps=fps=1/5",
-                "-c:a",
-                "aac",
-                "-b:a",
-                "56k",
-                "output.mp4"
-              );
-              const data = ffmpeg.FS("readFile", "output.mp4");
-              const video = document.getElementById("player");
-              video.src = URL.createObjectURL(
-                new Blob([data.buffer], { type: "video/mp4" })
-              );
-            };
-            document
-              .getElementById("uploader")
-              .addEventListener("change", transcode);
-          </script>
-          <br />
-          <button type="button" onclick="newIdea(); return false;">
-            Download
-          </button>
+          <button id="start-button" onclick="shrink()">Start</button>
+          <div id="result" style="display: none">
+            <label>Here is your shrinked video!</label>
+            <video id="player" controls></video>
+            <br />
+            <p>
+              <a
+                id="link-download"
+                download="output.mp4"
+                href="#"
+                target="_blank"
+                ><b>Download</b></a
+              >
+              <a id="link-new-tab" href="#" target="_blank"
+                ><i>Open in a new tab &nearr;</i></a
+              >
+            </p>
+          </div>
         </form>
+        <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
+        <script>
+          const { createFFmpeg, fetchFile } = FFmpeg;
+          const ffmpeg = createFFmpeg({ log: true });
+          const transcode = async () => {
+            const startButton = document.getElementById("start-button");
+            startButton.disabled = true;
+            startButton.innerText = "Shrinking your video...";
+            const result = document.getElementById("result");
+            result.style.display = "none";
+            const uploader = document.getElementById("uploader");
+            const files = uploader.files;
+            const { name } = files[0];
+            await ffmpeg.load();
+            ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
+            let args = ["-i", name];
+            // Low quality video
+            //ffmpeg -i input.mp4 -s hd480 output.mp4
+            const lowVideoQualityCheckbox = document.getElementById(
+              "lower-video-quality"
+            );
+            if (lowVideoQualityCheckbox.checked) {
+              args.push("-s", "hd480");
+            }
+            // Low quality audio
+            //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
+            const lowAudioQualityCheckbox = document.getElementById(
+              "lower-audio-quality"
+            );
+            if (lowAudioQualityCheckbox.checked) {
+              args.push("-c:a", "aac", "-b:a", "56k");
+            }
+            // One image every 5 seconds
+            //ffmpeg -i input.mp4 -filter:v fps=fps=1/5 output.mp4
+            const oneImageEvery5SecondsCheckbox = document.getElementById(
+              "image-every-5-seconds"
+            );
+            if (oneImageEvery5SecondsCheckbox.checked) {
+              args.push("-filter:v", "fps=fps=1/5");
+            }
+            args.push("output.mp4");
+            console.log("Running FFMPEG command with args:", args);
+            await ffmpeg.run(...args);
+            const data = ffmpeg.FS("readFile", "output.mp4");
+            const video = document.getElementById("player");
+            const blobURL = URL.createObjectURL(
+              new Blob([data.buffer], { type: "video/mp4" })
+            );
+            video.src = blobURL;
+            const linkToAnotherTab = document.getElementById("link-new-tab");
+            linkToAnotherTab.href = blobURL;
+            const downloadLink = document.getElementById("link-download");
+            downloadLink.href = blobURL;
+            result.style.display = "block";
+            startButton.disabled = false;
+            startButton.innerText = "Start";
+          };
+          document
+            .getElementById("start-button")
+            .addEventListener("click", transcode);
+        </script>
       </section>
       <hr />
       <article id="what">
@@ -132,9 +295,43 @@
       <article id="why">
         <header>
           <h2>Why this tool?</h2>
-          <p>TL;DR; to reduce environmental footprint of video</p>
+          <p>
+            TL;DR; to help reduce the environmental footprint of the digital
+            world
+          </p>
         </header>
-        <p>TODO</p>
+        <p>
+          This tool aim to humbly participate in stopping the race for ever more
+          quality and bandwidth (8K resolution, 5G network, etc.) by offering a
+          simple way to radically reduce the size of a video.
+        </p>
+        <p>
+          The digital world’s contribution to the footprint of humanity is
+          currently around 4% (see
+          <a
+            href="https://www.greenit.fr/environmental-footprint-of-the-digital-world/"
+            target="_blank"
+            >this report from GreenIT.fr</a
+          >
+          and
+          <a
+            href="https://theshiftproject.org/en/article/lean-ict-our-new-report/"
+            target="_blank"
+            >this another report from The Shift Project</a
+          >). This is more than
+          <a
+            href="https://theshiftproject.org/en/article/lean-ict-our-new-report/"
+            target="_blank"
+            >the aviation</a
+          >, and it is predicted to grow in the future.
+        </p>
+        <p>
+          Online video does <b>NOT</b> represent the main impact of the digital
+          world, manufacturing is a much bigger deal. And I think reducing the
+          size of a video can help <b>keeping our old devices</b> that have
+          limited bandwidth and limited computing power, instead of buying new
+          ones.
+        </p>
       </article>
       <hr />
       <article id="technical">
@@ -142,41 +339,55 @@
           <h2>How it works?</h2>
           <p>Let's get into the technical details</p>
         </header>
-        <p>TODO</p>
+        <p>
+          This tool uses
+          <a href="https://ffmpegwasm.github.io/" target="_blank"
+            >FFMPEG.WASM</a
+          >
+          to edit the video directly in the browser!
+        </p>
+        <p>
+          You can dowload
+          <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
+          to try these settings directly on your computer
+        </p>
+        <p><b>Convert to low video quality (480p)</b></p>
+        <pre><code>ffmpeg -i input.mp4 -s hd480 output.mp4</code></pre>
+        <p><b>Convert to low audio quality (56 kbits/s)</b></p>
+        <pre><code>ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4</code></pre>
+        <p><b>One image every 5 seconds</b></p>
+        <pre><code>ffmpeg -i input.mp4 -filter:v fps=fps=1/5 output.mp4</code></pre>
+        <p>
+          This approach is inspired by image dithering (see
+          <a href="https://ditherit.com/" target="_blank">here</a> for an
+          example), which removes a lot of data in the image while preserving
+          its essential meaning
+        </p>
       </article>
     </main>
-    <p>
-      This is a quick and opinionated way to reduce video size by limiting
-      quality.
-    </p>
-    <p>
-      This approach is inspired by image dithering (see
-      <a href="https://ditherit.com/" target="_blank">here</a> for an example),
-      which preserve essential meaning of the image but removes a lot of data
-    </p>
-    <p>This tool applies the following limits to your video:</p>
-    <ul>
-      <li>set video resolution to 480p (852x480)</li>
-      <li>set audio bitrate to 56 kbits/s</li>
-      <li>lower the FPS to 1 image every 5 seconds</li>
-    </ul>
-    <details>
-      <summary>Click me to show some technical details</summary>
+    <footer>
+      <hr />
       <p>
-        This tool uses
+        Made by
+        <a href="https://acailly.github.io" target="_blank"
+          >Antoine Cailly &nearr;</a
+        >
+      </p>
+      <p>
+        Thanks to
+        <a href="https://andybrewer.github.io/mvp/" target="_blank">MVP.css</a>
+        for this beautiful minimalist stylesheet
+      </p>
+      <p>
+        Thanks to
+        <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
+        to exist
+      </p>
+      <p>
+        Thanks to
         <a href="https://ffmpegwasm.github.io/" target="_blank">FFMPEG.WASM</a>
-        to apply the following parameters to the video:
+        to have made this wonderful tool usable in the browser
       </p>
-      <pre><code>ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4</code></pre>
-      <p>
-        You can dowload <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
-        to try these settings directly on your computer
-      </p>
-    </details>
-    <p>
-      These settings should be acceptable for conference videos or similar types
-      of videos where the same image often stays onscreen during serveral
-      seconds
-    </p>
+    </footer>
   </body>
 </html>
