@@ -4,10 +4,147 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shrink my video</title>
-    <link rel="stylesheet" href="almond.css" />
+    <!-- <link rel="stylesheet" href="almond.css" /> -->
+    <link rel="stylesheet" href="mvp.css" />
   </head>
   <body>
-    <h1>Shrink my video!</h1>
+    <header>
+      <nav>
+        <a href="https://andybrewer.github.io/mvp/"
+          ><img alt="MVP.css" src="./img/logo.png" height="70"
+        /></a>
+        <ul>
+          <li>Home</li>
+          <li><a href="#what">What does it do?</a></li>
+          <li><a href="#why">Why this tool?</a></li>
+          <li><a href="#technical">Technical details</a></li>
+          <li>
+            <a
+              href="https://github.com/acailly/shrink-my-video/"
+              target="_blank"
+              >GitHub &nearr;</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <h1>Shrink my video!</h1>
+      <p>Upload your video then get a smaller one, <b>easy!</b>.</p>
+    </header>
+    <main>
+      <section id="run">
+        <form>
+          <label for="uploader">Import your file</label>
+          <input type="file" id="uploader" />
+          <label
+            >Select shrinking techniques (<a href="#what">more details</a
+            >)</label
+          >
+          <div>
+            <input
+              type="checkbox"
+              id="lower-video-quality"
+              name="shrink"
+              value="lower-video-quality"
+              checked
+            />
+            <label for="lower-video-quality">Lower video quality (480p)</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="lower-audio-quality"
+              name="shrink"
+              value="lower-audio-quality"
+              checked
+            />
+            <label for="lower-audio-quality"
+              >Lower audio quality (56 kbits/s)</label
+            >
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="image-every-5-seconds"
+              name="shrink"
+              value="image-every-5-seconds"
+              checked
+            />
+            <label for="image-every-5-seconds">One image every 5 seconds</label>
+          </div>
+          <label>Here is your shrinked video!</label>
+          <video id="player" controls></video>
+          <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
+          <script>
+            const { createFFmpeg, fetchFile } = FFmpeg;
+            const ffmpeg = createFFmpeg({ log: true });
+            const transcode = async ({ target: { files } }) => {
+              const { name } = files[0];
+              await ffmpeg.load();
+              ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
+              //ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4
+              await ffmpeg.run(
+                "-i",
+                name,
+                "-s",
+                "hd480",
+                "-filter:v",
+                "fps=fps=1/5",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "56k",
+                "output.mp4"
+              );
+              const data = ffmpeg.FS("readFile", "output.mp4");
+              const video = document.getElementById("player");
+              video.src = URL.createObjectURL(
+                new Blob([data.buffer], { type: "video/mp4" })
+              );
+            };
+            document
+              .getElementById("uploader")
+              .addEventListener("change", transcode);
+          </script>
+          <br />
+          <button type="button" onclick="newIdea(); return false;">
+            Download
+          </button>
+        </form>
+      </section>
+      <hr />
+      <article id="what">
+        <header>
+          <h2>What does it do?</h2>
+        </header>
+        <p>It applies some techniques to reduce the size of your video:</p>
+        <br />
+        <h3>Convert to low video quality (480p)</h3>
+        <p>You won't see tiny details but the essential is there</p>
+        <h3>Convert to low audio quality (56 kbits/s)</h3>
+        <p>Many videos remain audible with this settings</p>
+        <h3>One image every 5 seconds (!)</h3>
+        <p>
+          For some videos, like conferences, there is not much action and you
+          can easily understand what happens even with one image every 5 seconds
+        </p>
+      </article>
+      <hr />
+      <article id="why">
+        <header>
+          <h2>Why this tool?</h2>
+          <p>TL;DR; to reduce environmental footprint of video</p>
+        </header>
+        <p>TODO</p>
+      </article>
+      <hr />
+      <article id="technical">
+        <header>
+          <h2>How it works?</h2>
+          <p>Let's get into the technical details</p>
+        </header>
+        <p>TODO</p>
+      </article>
+    </main>
     <p>
       This is a quick and opinionated way to reduce video size by limiting
       quality.
@@ -41,40 +178,5 @@
       of videos where the same image often stays onscreen during serveral
       seconds
     </p>
-    <form>
-      <label for="uploader">Import your file</label>
-      <input type="file" id="uploader" />
-    </form>
-    <video id="player" controls></video>
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
-    <script>
-      const { createFFmpeg, fetchFile } = FFmpeg;
-      const ffmpeg = createFFmpeg({ log: true });
-      const transcode = async ({ target: { files } }) => {
-        const { name } = files[0];
-        await ffmpeg.load();
-        ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
-        //ffmpeg -i input.mp4 -s hd480 -filter:v fps=fps=1/5 -c:a aac -b:a 56k output.mp4
-        await ffmpeg.run(
-          "-i",
-          name,
-          "-s",
-          "hd480",
-          "-filter:v",
-          "fps=fps=1/5",
-          "-c:a",
-          "aac",
-          "-b:a",
-          "56k",
-          "output.mp4"
-        );
-        const data = ffmpeg.FS("readFile", "output.mp4");
-        const video = document.getElementById("player");
-        video.src = URL.createObjectURL(
-          new Blob([data.buffer], { type: "video/mp4" })
-        );
-      };
-      document.getElementById("uploader").addEventListener("change", transcode);
-    </script>
   </body>
 </html>
