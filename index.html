@@ -150,7 +150,7 @@
         </ul>
       </nav>
       <h1>Shrink my video!</h1>
-      <p>Upload your video then get a smaller one, <b>easy!</b></p>
+      <p>🌳 Upload your video then get a smaller one, <b>easy!</b></p>
     </header>
     <main>
       <section id="run">
@@ -196,6 +196,7 @@
             <label for="image-every-5-seconds">One image every 5 seconds</label>
           </div>
           <button id="start-button" onclick="shrink()">Start</button>
+          <progress id="progress" style="display: none"></progress>
           <div id="result" style="display: none">
             <label>Here is your shrinked video!</label>
             <video id="player" controls></video>
@@ -222,6 +223,8 @@
             const startButton = document.getElementById("start-button");
             startButton.disabled = true;
             startButton.innerText = "Shrinking your video...";
+            const progress = document.getElementById("progress");
+            progress.style.display = "none";
             const result = document.getElementById("result");
             result.style.display = "none";
             const uploader = document.getElementById("uploader");
@@ -270,6 +273,10 @@
             args.push("output.mp4");
 
             console.log("Running FFMPEG command with args:", args);
+            progress.style.display = "block";
+            ffmpeg.setProgress(({ ratio }) => {
+              progress.value = ratio;
+            });
             await ffmpeg.run(...args);
             const data = ffmpeg.FS("readFile", "output.mp4");
             const video = document.getElementById("player");
@@ -281,6 +288,7 @@
             linkToAnotherTab.href = blobURL;
             const downloadLink = document.getElementById("link-download");
             downloadLink.href = blobURL;
+            progress.style.display = "none";
             result.style.display = "block";
             startButton.disabled = false;
             startButton.innerText = "Start";
