@@ -115,6 +115,16 @@ Bilan :
 - le fichier fait 20.3mo au lieu de 86.1mo, on a pas fait mieux
 - je pense qu'on atteint la limite de l'acceptable
 
+## Expérimentation 5 : Noir et blanc
+
+Test : `ffmpeg -i developper-avec-utilisateur-inria.mp4 -vf hue=s=0 developper-avec-utilisateur-inria-blackwhite.mp4`
+(https://davidwalsh.name/convert-video-grayscale)
+
+Bilan :
+
+- le fichier fait 56mo au lieu de 84mo, non négligeable
+- ca passe carément, les slides sont assez contrastés
+
 ## Preset du Shift project
 
 J'essaie de reproduire les reglages conseillés ici : https://theshiftproject.org/wp-content/uploads/2019/09/Guide-R%C3%A9duire-le-poids-de-vos-vid%C3%A9os-en-5-minutes_V6.pdf
