@@ -7,7 +7,7 @@ Est ce qu'il serait envisageable de faire baisser le poids de certaines vidéos 
 ## TODO
 
 - [x] Faire un POC pour encoder une vidéo en ligne avec des choix drastiques
-- [ ] Rendre tout ca un peu plus beau
+- [x] Rendre tout ca un peu plus beau
 - [ ] Mettre un exemple de vidéo avant / après
 - [ ] Tester les choix techniques indiqués dans le rapport du shit project : https://theshiftproject.org/wp-content/uploads/2019/09/Guide-R%C3%A9duire-le-poids-de-vos-vid%C3%A9os-en-5-minutes_V6.pdf
 
@@ -114,3 +114,10 @@ Bilan :
 
 - le fichier fait 20.3mo au lieu de 86.1mo, on a pas fait mieux
 - je pense qu'on atteint la limite de l'acceptable
+
+## Preset du Shift project
+
+J'essaie de reproduire les reglages conseillés ici : https://theshiftproject.org/wp-content/uploads/2019/09/Guide-R%C3%A9duire-le-poids-de-vos-vid%C3%A9os-en-5-minutes_V6.pdf
+
+Mon meilleur résultat :
+`ffmpeg -i developper-avec-utilisateur-inria.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k developper-avec-utilisateur-inria-shiftproject.mp4`
