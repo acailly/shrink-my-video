@@ -150,7 +150,7 @@
         </ul>
       </nav>
       <h1>Shrink my video!</h1>
-      <p>Upload your video then get a smaller one, <b>easy!</b>.</p>
+      <p>Upload your video then get a smaller one, <b>easy!</b></p>
     </header>
     <main>
       <section id="run">
@@ -162,12 +162,16 @@
             >)</label
           >
           <div>
+            <p>
+              <span style="margin-left: 5px; margin-right: 3px">✔</span> Apply
+              settings from The Shift Project (720p, 160 kbits/s)
+              <a href="#what">(?)</a>
+            </p>
             <input
               type="checkbox"
               id="lower-video-quality"
               name="shrink"
               value="lower-video-quality"
-              checked
             />
             <label for="lower-video-quality">Lower video quality (480p)</label>
           </div>
@@ -177,7 +181,6 @@
               id="lower-audio-quality"
               name="shrink"
               value="lower-audio-quality"
-              checked
             />
             <label for="lower-audio-quality"
               >Lower audio quality (56 kbits/s)</label
@@ -189,7 +192,6 @@
               id="image-every-5-seconds"
               name="shrink"
               value="image-every-5-seconds"
-              checked
             />
             <label for="image-every-5-seconds">One image every 5 seconds</label>
           </div>
@@ -228,6 +230,10 @@
             await ffmpeg.load();
             ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
             let args = ["-i", name];
+            // Settings from The Shift Project
+            //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
+            args.push("-c:v", "libx264", "-crf", "22");
+
             // Low quality video
             //ffmpeg -i input.mp4 -s hd480 output.mp4
             const lowVideoQualityCheckbox = document.getElementById(
@@ -235,7 +241,10 @@
             );
             if (lowVideoQualityCheckbox.checked) {
               args.push("-s", "hd480");
+            } else {
+              args.push("-s", "hd720");
             }
+
             // Low quality audio
             //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
             const lowAudioQualityCheckbox = document.getElementById(
@@ -243,16 +252,23 @@
             );
             if (lowAudioQualityCheckbox.checked) {
               args.push("-c:a", "aac", "-b:a", "56k");
+            } else {
+              args.push("-c:a", "aac", "-b:a", "160k");
             }
+
             // One image every 5 seconds
             //ffmpeg -i input.mp4 -filter:v fps=fps=1/5 output.mp4
             const oneImageEvery5SecondsCheckbox = document.getElementById(
               "image-every-5-seconds"
             );
             if (oneImageEvery5SecondsCheckbox.checked) {
-              args.push("-filter:v", "fps=fps=1/5");
+              args.push("-vf", "scale=iw*sar:ih,setsar=1,fps=fps=1/5");
+            } else {
+              args.push("-vf", "scale=iw*sar:ih,setsar=1");
             }
+
             args.push("output.mp4");
+
             console.log("Running FFMPEG command with args:", args);
             await ffmpeg.run(...args);
             const data = ffmpeg.FS("readFile", "output.mp4");
@@ -279,12 +295,27 @@
         <header>
           <h2>What does it do?</h2>
         </header>
-        <p>It applies some techniques to reduce the size of your video:</p>
-        <br />
-        <h3>Convert to low video quality (480p)</h3>
+        <h3>Apply settings from The Shift Project (720p, 160 kbits/s)</h3>
+        <p>
+          The Shift Project has published a guide for reducing the size of a
+          video while maintaining a good quality
+        </p>
+        <p>
+          You can download it
+          <a
+            href="https://theshiftproject.org/en/guide-reduce-weight-video-5-minutes/"
+            target="_blank"
+            >here</a
+          >.
+        </p>
+        <p>
+          Basically, it reduces the video quality to 720p and the audio quality
+          to 160 kbits/s
+        </p>
+        <h3>Lower video quality (480p)</h3>
         <p>You won't see tiny details but the essential is there</p>
-        <h3>Convert to low audio quality (56 kbits/s)</h3>
-        <p>Many videos remain audible with this settings</p>
+        <h3>Lower audio quality (56 kbits/s)</h3>
+        <p>If the audio is mainly speeches, it should remain audible</p>
         <h3>One image every 5 seconds (!)</h3>
         <p>
           For some videos, like conferences, there is not much action and you
@@ -327,7 +358,7 @@
         </p>
         <p>
           Online video does <b>NOT</b> represent the main impact of the digital
-          world, manufacturing is a much bigger deal. And I think reducing the
+          world, <b>manufacturing is a much bigger deal</b>. But reducing the
           size of a video can help <b>keeping our old devices</b> that have
           limited bandwidth and limited computing power, instead of buying new
           ones.
@@ -351,12 +382,14 @@
           <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
           to try these settings directly on your computer
         </p>
-        <p><b>Convert to low video quality (480p)</b></p>
-        <pre><code>ffmpeg -i input.mp4 -s hd480 output.mp4</code></pre>
-        <p><b>Convert to low audio quality (56 kbits/s)</b></p>
+        <p><b>Apply settings from The Shift Project (720p, 160 kbits/s)</b></p>
+        <pre><code>ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4</code></pre>
+        <p><b>Lower video quality (480p)</b></p>
+        <pre><code>ffmpeg -i input.mp4 -s hd480 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" output.mp4</code></pre>
+        <p><b>Lower audio quality (56 kbits/s)</b></p>
         <pre><code>ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4</code></pre>
         <p><b>One image every 5 seconds</b></p>
-        <pre><code>ffmpeg -i input.mp4 -filter:v fps=fps=1/5 output.mp4</code></pre>
+        <pre><code>ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4</code></pre>
         <p>
           This approach is inspired by image dithering (see
           <a href="https://ditherit.com/" target="_blank">here</a> for an
@@ -389,5 +422,29 @@
         to have made this wonderful tool usable in the browser
       </p>
     </footer>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./serviceworker.js")
+            .then((registration) => {
+              console.log("[service-worker] registered!");
+            })
+            .catch((error) => {
+              console.error(
+                "[service-worker] error during registration",
+                error
+              );
+            });
+
+          navigator.serviceWorker.addEventListener("controllerchange", () => {
+            // This fires when the service worker controlling this page
+            // changes, eg a new worker has skipped waiting and become
+            // the new active worker.
+            console.log("[service-worker] service worker has been updated!");
+          });
+        });
+      }
+    </script>
   </body>
 </html>
