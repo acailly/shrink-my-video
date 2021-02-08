@@ -195,6 +195,15 @@
             />
             <label for="image-every-5-seconds">One image every 5 seconds</label>
           </div>
+          <div>
+            <input
+              type="checkbox"
+              id="black-and-white"
+              name="shrink"
+              value="black-and-white"
+            />
+            <label for="black-and-white">Black and white</label>
+          </div>
           <button id="start-button" onclick="shrink()">Start</button>
           <progress id="progress" style="display: none"></progress>
           <div id="result" style="display: none">
@@ -259,16 +268,24 @@
               args.push("-c:a", "aac", "-b:a", "160k");
             }
 
+            let videoFilter = "scale=iw*sar:ih,setsar=1";
             // One image every 5 seconds
-            //ffmpeg -i input.mp4 -filter:v fps=fps=1/5 output.mp4
+            //ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4
             const oneImageEvery5SecondsCheckbox = document.getElementById(
               "image-every-5-seconds"
             );
             if (oneImageEvery5SecondsCheckbox.checked) {
-              args.push("-vf", "scale=iw*sar:ih,setsar=1,fps=fps=1/5");
-            } else {
-              args.push("-vf", "scale=iw*sar:ih,setsar=1");
+              videoFilter = videoFilter.concat(",fps=fps=1/5");
             }
+            // Black and white
+            //ffmpeg -i input.mp4 -vf "hue=s=0" output.mp4
+            const blackAndWhiteCheckbox = document.getElementById(
+              "black-and-white"
+            );
+            if (blackAndWhiteCheckbox.checked) {
+              videoFilter = videoFilter.concat(",hue=s=0");
+            }
+            args.push("-vf", videoFilter);
 
             args.push("output.mp4");
 
@@ -329,6 +346,8 @@
           For some videos, like conferences, there is not much action and you
           can easily understand what happens even with one image every 5 seconds
         </p>
+        <h3>Black and white</h3>
+        <p>Aesthetic and lightweight</p>
       </article>
       <hr />
       <article id="why">
@@ -398,8 +417,10 @@
         <pre><code>ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4</code></pre>
         <p><b>One image every 5 seconds</b></p>
         <pre><code>ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4</code></pre>
+        <p><b>Black and white</b></p>
+        <pre><code>ffmpeg -i input.mp4 -vf "hue=s=0" output.mp4</code></pre>
         <p>
-          This approach is inspired by image dithering (see
+          This whole approach is inspired by image dithering (see
           <a href="https://ditherit.com/" target="_blank">here</a> for an
           example), which removes a lot of data in the image while preserving
           its essential meaning

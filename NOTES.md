@@ -125,6 +125,18 @@ Bilan :
 - le fichier fait 56mo au lieu de 84mo, non négligeable
 - ca passe carément, les slides sont assez contrastés
 
+Test avec toutes les modifs : `ffmpeg -i developper-avec-utilisateur-inria.mp4 -s hd480 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1,fps=fps=1/5,hue=s=0" -c:a aac -b:a 56k developper-avec-utilisateur-inria-hardcore.mp4`
+
+Bilan :
+
+- on gagne 1Mo, mouais
+
+Test avec toutes les modifs sauf la diminution de FPS : `ffmpeg -i developper-avec-utilisateur-inria.mp4 -s hd480 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1,hue=s=0" -c:a aac -b:a 56k developper-avec-utilisateur-inria-hardcore.mp4`
+
+Bilan :
+
+- on passe de 86mo à 32mo, un facteur 2.5, pas mal
+
 ## Preset du Shift project
 
 J'essaie de reproduire les reglages conseillés ici : https://theshiftproject.org/wp-content/uploads/2019/09/Guide-R%C3%A9duire-le-poids-de-vos-vid%C3%A9os-en-5-minutes_V6.pdf
