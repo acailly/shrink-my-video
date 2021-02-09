@@ -1,4 +1,3 @@
 var serviceWorkerConfiguration = {
-  baseURL: "/shrink-my-video",
-  corsProxyURL: "https://acailly-cors-anywhere.herokuapp.com/",
+  corsProxyURL: "https://cors-anywhere.herokuapp.com/",
 };

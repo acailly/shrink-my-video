@@ -7,9 +7,6 @@ self.importScripts("./filesToCache.js");
 // Declare serviceWorkerConfiguration variable
 self.importScripts("./serviceworker-configuration.js");
 
-const baseURL = serviceWorkerConfiguration.baseURL;
-console.log("[service-worker] base URL is", baseURL);
-
 self.addEventListener("install", function (event) {
   console.log("[service-worker] installation");
 
