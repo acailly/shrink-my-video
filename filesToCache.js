@@ -1,5 +1,6 @@
 var filesToCache = [
   "index.html",
+  "mvp.css",
   "favicon.ico",
   "icons/android-chrome-192x192.png",
   "icons/android-chrome-512x512.png",
@@ -20,4 +21,8 @@ var filesToCache = [
   "splashscreens/iphonex_splash.png",
   "splashscreens/iphonexr_splash.png",
   "splashscreens/iphonexsmax_splash.png",
+  "https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js",
+  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js",
+  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.wasm",
+  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.worker.js",
 ];

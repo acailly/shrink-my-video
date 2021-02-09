@@ -63,6 +63,9 @@ self.addEventListener("fetch", async function (event) {
           "- try to load from cache"
         );
 
+        // TODO ACY Handle loading root (without index.html)
+        // TODO ACY test on deployed version
+
         return caches.match(event.request);
       })
       .then((response) => {
