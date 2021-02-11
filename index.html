@@ -137,8 +137,8 @@
         /></a>
         <ul>
           <li>Home</li>
-          <li><a href="#what">What does it do?</a></li>
           <li><a href="#why">Why this tool?</a></li>
+          <li><a href="#what">What does it do?</a></li>
           <li><a href="#technical">Technical details</a></li>
           <li>
             <a
@@ -173,7 +173,9 @@
               name="shrink"
               value="lower-video-quality"
             />
-            <label for="lower-video-quality">Lower video quality (480p)</label>
+            <label for="lower-video-quality"
+              >Lower video resolution (480p)</label
+            >
           </div>
           <div>
             <input
@@ -183,7 +185,7 @@
               value="lower-audio-quality"
             />
             <label for="lower-audio-quality"
-              >Lower audio quality (56 kbits/s)</label
+              >Lower audio bitrate (56 kbits/s)</label
             >
           </div>
           <div>
@@ -316,40 +318,6 @@
         </script>
       </section>
       <hr />
-      <article id="what">
-        <header>
-          <h2>What does it do?</h2>
-        </header>
-        <h3>Apply settings from The Shift Project (720p, 160 kbits/s)</h3>
-        <p>
-          The Shift Project has published a guide for reducing the size of a
-          video while maintaining a good quality
-        </p>
-        <p>
-          You can download it
-          <a
-            href="https://theshiftproject.org/en/guide-reduce-weight-video-5-minutes/"
-            target="_blank"
-            >here</a
-          >.
-        </p>
-        <p>
-          Basically, it reduces the video quality to 720p and the audio quality
-          to 160 kbits/s
-        </p>
-        <h3>Lower video quality (480p)</h3>
-        <p>You won't see tiny details but the essential is there</p>
-        <h3>Lower audio quality (56 kbits/s)</h3>
-        <p>If the audio is mainly speeches, it should remain audible</p>
-        <h3>One image every 5 seconds (!)</h3>
-        <p>
-          For some videos, like conferences, there is not much action and you
-          can easily understand what happens even with one image every 5 seconds
-        </p>
-        <h3>Black and white</h3>
-        <p>Aesthetic and lightweight</p>
-      </article>
-      <hr />
       <article id="why">
         <header>
           <h2>Why this tool?</h2>
@@ -392,6 +360,40 @@
         </p>
       </article>
       <hr />
+      <article id="what">
+        <header>
+          <h2>What does it do?</h2>
+        </header>
+        <h3>Apply settings from The Shift Project (720p, 160 kbits/s)</h3>
+        <p>
+          The Shift Project has published a guide for reducing the size of a
+          video while maintaining a good quality
+        </p>
+        <p>
+          You can download it
+          <a
+            href="https://theshiftproject.org/en/guide-reduce-weight-video-5-minutes/"
+            target="_blank"
+            >here</a
+          >.
+        </p>
+        <p>
+          Basically, it reduces the video resolution to 720p and the audio
+          bitrate to 160 kbits/s
+        </p>
+        <h3>Lower video resolution (480p)</h3>
+        <p>You won't see tiny details but the essential is there</p>
+        <h3>Lower audio bitrate (56 kbits/s)</h3>
+        <p>If the audio is mainly speeches, it should remain audible</p>
+        <h3>One image every 5 seconds (!)</h3>
+        <p>
+          For some videos, like conferences, there is not much action and you
+          can easily understand what happens even with one image every 5 seconds
+        </p>
+        <h3>Black and white</h3>
+        <p>Aesthetic and lightweight</p>
+      </article>
+      <hr />
       <article id="technical">
         <header>
           <h2>How it works?</h2>
@@ -411,9 +413,9 @@
         </p>
         <p><b>Apply settings from The Shift Project (720p, 160 kbits/s)</b></p>
         <pre><code>ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4</code></pre>
-        <p><b>Lower video quality (480p)</b></p>
+        <p><b>Lower video resolution (480p)</b></p>
         <pre><code>ffmpeg -i input.mp4 -s hd480 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" output.mp4</code></pre>
-        <p><b>Lower audio quality (56 kbits/s)</b></p>
+        <p><b>Lower audio bitrate (56 kbits/s)</b></p>
         <pre><code>ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4</code></pre>
         <p><b>One image every 5 seconds</b></p>
         <pre><code>ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4</code></pre>
