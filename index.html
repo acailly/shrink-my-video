@@ -167,12 +167,23 @@
             >Select shrinking techniques (<a href="#what">more details</a
             >)</label
           >
+          <p>
+            <span style="margin-left: 5px; margin-right: 3px">✔</span> Apply
+            settings from The Shift Project (720p, CRF 22, 160 kbits/s)
+            <a href="#what">(?)</a>
+          </p>
           <div>
-            <p>
-              <span style="margin-left: 5px; margin-right: 3px">✔</span> Apply
-              settings from The Shift Project (720p, 160 kbits/s)
-              <a href="#what">(?)</a>
-            </p>
+            <input
+              type="checkbox"
+              id="lower-video-resolution"
+              name="shrink"
+              value="lower-video-resolution"
+            />
+            <label for="lower-video-resolution"
+              >Lower video resolution (480p)</label
+            >
+          </div>
+          <div>
             <input
               type="checkbox"
               id="lower-video-quality"
@@ -180,17 +191,17 @@
               value="lower-video-quality"
             />
             <label for="lower-video-quality"
-              >Lower video resolution (480p)</label
+              >Lower video quality (CRF 28)</label
             >
           </div>
           <div>
             <input
               type="checkbox"
-              id="lower-audio-quality"
+              id="lower-audio-bitrate"
               name="shrink"
-              value="lower-audio-quality"
+              value="lower-audio-bitrate"
             />
-            <label for="lower-audio-quality"
+            <label for="lower-audio-bitrate"
               >Lower audio bitrate (56 kbits/s)</label
             >
           </div>
@@ -252,25 +263,36 @@
             let args = ["-i", name];
             // Settings from The Shift Project
             //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
-            args.push("-c:v", "libx264", "-crf", "22");
+            args.push("-c:v", "libx264");
 
-            // Low quality video
+            // Low video resolution
             //ffmpeg -i input.mp4 -s hd480 output.mp4
-            const lowVideoQualityCheckbox = document.getElementById(
-              "lower-video-quality"
+            const lowVideoResolutionCheckbox = document.getElementById(
+              "lower-video-resolution"
             );
-            if (lowVideoQualityCheckbox.checked) {
+            if (lowVideoResolutionCheckbox.checked) {
               args.push("-s", "hd480");
             } else {
               args.push("-s", "hd720");
             }
 
-            // Low quality audio
-            //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
-            const lowAudioQualityCheckbox = document.getElementById(
-              "lower-audio-quality"
+            // Low video quality
+            //ffmpeg -i input.mp4 -crf 28 output.mp4
+            const lowVideoQualityCheckbox = document.getElementById(
+              "lower-video-quality"
             );
-            if (lowAudioQualityCheckbox.checked) {
+            if (lowVideoQualityCheckbox.checked) {
+              args.push("-crf", "28");
+            } else {
+              args.push("-crf", "22");
+            }
+
+            // Low audio bitrate
+            //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
+            const lowAudioBitrateCheckbox = document.getElementById(
+              "lower-audio-bitrate"
+            );
+            if (lowAudioBitrateCheckbox.checked) {
               args.push("-c:a", "aac", "-b:a", "56k");
             } else {
               args.push("-c:a", "aac", "-b:a", "160k");
@@ -370,7 +392,9 @@
         <header>
           <h2>What does it do?</h2>
         </header>
-        <h3>Apply settings from The Shift Project (720p, 160 kbits/s)</h3>
+        <h3>
+          Apply settings from The Shift Project (720p, CRF 28, 160 kbits/s)
+        </h3>
         <p>
           The Shift Project has published a guide for reducing the size of a
           video while maintaining a good quality
@@ -385,12 +409,23 @@
         </p>
         <p>
           Basically, it reduces the video resolution to 720p and the audio
-          bitrate to 160 kbits/s
+          bitrate to 160 kbits/s. The Constant Rate Factor (CRF) is set to 22.
         </p>
         <h3>Lower video resolution (480p)</h3>
-        <p>You won't see tiny details but the essential is there</p>
+        <p>
+          It reduces the video resolution to 480p. Don't watch it on your 4K TV,
+          otherwise it is OK.
+        </p>
+        <h3>Lower video quality (CRF 28)</h3>
+        <p>
+          It reduces the Constant Rate Factor (CRF) to 28. You won't see tiny
+          details but the essential is there.
+        </p>
         <h3>Lower audio bitrate (56 kbits/s)</h3>
-        <p>If the audio is mainly speeches, it should remain audible</p>
+        <p>
+          It reduces the audio bitrate to 160 kbits/s. If the audio is mainly
+          speeches, it should remain audible.
+        </p>
         <h3>One image every 5 seconds (!)</h3>
         <p>
           For some videos, like conferences, there is not much action and you
@@ -417,10 +452,17 @@
           <a href="https://ffmpeg.org/" target="_blank">FFMPEG</a>
           to try these settings directly on your computer
         </p>
-        <p><b>Apply settings from The Shift Project (720p, 160 kbits/s)</b></p>
+        <p>
+          <b
+            >Apply settings from The Shift Project (720p, CRF 28, 160
+            kbits/s)</b
+          >
+        </p>
         <pre><code>ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4</code></pre>
         <p><b>Lower video resolution (480p)</b></p>
         <pre><code>ffmpeg -i input.mp4 -s hd480 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" output.mp4</code></pre>
+        <p><b>Lower video quality (CRF 28)</b></p>
+        <pre><code>ffmpeg -i input.mp4 -c:v libx264 -crf 28 -vf "scale=iw*sar:ih,setsar=1" output.mp4</code></pre>
         <p><b>Lower audio bitrate (56 kbits/s)</b></p>
         <pre><code>ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4</code></pre>
         <p><b>One image every 5 seconds</b></p>
