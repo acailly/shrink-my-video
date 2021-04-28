@@ -243,7 +243,7 @@
             </p>
           </div>
         </form>
-        <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
+        <script src="ffmpeg.min.js"></script>
         <script>
           const { createFFmpeg, fetchFile } = FFmpeg;
           const ffmpeg = createFFmpeg({ log: true });
@@ -268,7 +268,6 @@
             // Settings from The Shift Project
             //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
             args.push("-c:v", "libx264");
-
             // Low video resolution
             //ffmpeg -i input.mp4 -s hd480 output.mp4
             const lowVideoResolutionCheckbox = document.getElementById(
@@ -279,7 +278,6 @@
             } else {
               args.push("-s", "hd720");
             }
-
             // Low video quality
             //ffmpeg -i input.mp4 -crf 28 output.mp4
             const lowVideoQualityCheckbox = document.getElementById(
@@ -290,7 +288,6 @@
             } else {
               args.push("-crf", "22");
             }
-
             // Low audio bitrate
             //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
             const lowAudioBitrateCheckbox = document.getElementById(
@@ -301,7 +298,6 @@
             } else {
               args.push("-c:a", "aac", "-b:a", "160k");
             }
-
             let videoFilter = "scale=iw*sar:ih,setsar=1";
             // One image every 5 seconds
             //ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4
@@ -320,9 +316,7 @@
               videoFilter = videoFilter.concat(",hue=s=0");
             }
             args.push("-vf", videoFilter);
-
             args.push("output.mp4");
-
             console.log("Running FFMPEG command with args:", args);
             progress.style.display = "block";
             ffmpeg.setProgress(({ ratio }) => {
@@ -346,7 +340,10 @@
           };
           document
             .getElementById("start-button")
-            .addEventListener("click", transcode);
+            .addEventListener("click", (e) => {
+              e.preventDefault();
+              transcode();
+            });
         </script>
       </section>
       <hr />

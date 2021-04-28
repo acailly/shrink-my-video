@@ -21,8 +21,8 @@ var filesToCache = [
   "splashscreens/iphonex_splash.png",
   "splashscreens/iphonexr_splash.png",
   "splashscreens/iphonexsmax_splash.png",
-  "https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js",
-  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js",
-  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.wasm",
-  "https://unpkg.com/@ffmpeg/core@0.8.5/dist/ffmpeg-core.worker.js",
+  "ffmpeg.min.js",
+  "0.8.5/dist/ffmpeg-core.js",
+  "0.8.5/dist/ffmpeg-core.wasm",
+  "0.8.5/dist/ffmpeg-core.worker.js",
 ];
