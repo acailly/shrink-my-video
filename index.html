@@ -125,6 +125,11 @@
     />
     <meta name="twitter:image:alt" content="Logo of Shrink my video! tool" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- See https://github.com/ffmpegwasm/ffmpeg.wasm/issues/102#issuecomment-722081362 -->
+    <!-- I put it here in case this works one day, it doesn't at the moment -->
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
   </head>
   <body>
     <header>
@@ -156,6 +161,12 @@
           >Privacy note: The video stays on your computer, nothing is sent
           anywhere, it even works offline!</i
         >
+      </p>
+      <p>
+        <mark>UPDATE</mark> This tool may not work due to new browser
+        restriction with Web Assembly 😢 <br />
+        (confirmed in Firefox browser but the same issue is coming on Chrome
+        browser)
       </p>
     </header>
     <main>
