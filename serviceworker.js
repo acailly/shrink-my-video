@@ -1,4 +1,4 @@
-const version = "v1";
+const version = "v2";
 const OFFLINE_URL = "index.html";
 
 // Declare filesToCache variable

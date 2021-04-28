@@ -258,9 +258,13 @@
             const uploader = document.getElementById("uploader");
             const files = uploader.files;
             const { name } = files[0];
+            // from https://stackoverflow.com/a/37511463
+            const sanitizedName = name
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
             await ffmpeg.load();
-            ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
-            let args = ["-i", name];
+            ffmpeg.FS("writeFile", sanitizedName, await fetchFile(files[0]));
+            let args = ["-i", sanitizedName];
             // Settings from The Shift Project
             //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
             args.push("-c:v", "libx264");
@@ -355,9 +359,9 @@
           </p>
         </header>
         <p>
-          This tool aims to humbly participate in stopping the race for ever more
-          quality and bandwidth (8K resolution, 5G network, etc.) by offering a
-          simple way to radically reduce the size of a video.
+          This tool aims to humbly participate in stopping the race for ever
+          more quality and bandwidth (8K resolution, 5G network, etc.) by
+          offering a simple way to radically reduce the size of a video.
         </p>
         <p>
           The digital world’s contribution to the footprint of humanity is
@@ -382,9 +386,8 @@
         <p>
           Online video does <b>NOT</b> represent the main impact of the digital
           world, <b>manufacturing is a much bigger deal</b>. But reducing the
-          size of a video can help <b>keep our old devices</b> that have
-          limited bandwidth and limited computing power, instead of buying new
-          ones.
+          size of a video can help <b>keep our old devices</b> that have limited
+          bandwidth and limited computing power, instead of buying new ones.
         </p>
       </article>
       <hr />
