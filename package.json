@@ -1,0 +1,22 @@
+{
+  "name": "shrink-my-video",
+  "version": "1.0.0",
+  "description": "> Opinionated video file size reducer ([more details](https://acailly.github.io/shrink-my-video/#why))",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acailly/shrink-my-video.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acailly/shrink-my-video/issues"
+  },
+  "homepage": "https://github.com/acailly/shrink-my-video#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
