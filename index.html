@@ -132,17 +132,6 @@
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
   </head>
   <body>
-    <!-- Redirect to heroku app while FFMPEG.WASM is not compatible with Github pages hosting -->
-    <script>
-      window.onload = function () {
-        if (window.location.href.indexOf("acailly.github.io") !== -1) {
-          window.location.replace(
-            "https://shrink-my-video.herokuapp.com/shrink-my-video/"
-          );
-        }
-      };
-    </script>
-
     <header>
       <nav>
         <a href="https://acailly.github.io/shrink-my-video/"
@@ -518,8 +507,16 @@
       </p>
     </footer>
     <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
+      window.addEventListener("load", () => {
+        // Redirect to heroku app while FFMPEG.WASM is not compatible with Github pages hosting
+        if (window.location.href.indexOf("acailly.github.io") !== -1) {
+          window.location.replace(
+            "https://shrink-my-video.herokuapp.com/shrink-my-video/"
+          );
+          return;
+        }
+        // Register service worker
+        if ("serviceWorker" in navigator) {
           navigator.serviceWorker
             .register("./serviceworker.js")
             .then((registration) => {
@@ -538,8 +535,8 @@
             // the new active worker.
             console.log("[service-worker] service worker has been updated!");
           });
-        });
-      }
+        }
+      });
     </script>
   </body>
 </html>
