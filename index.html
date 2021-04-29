@@ -132,6 +132,17 @@
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
   </head>
   <body>
+    <!-- Redirect to heroku app while FFMPEG.WASM is not compatible with Github pages hosting -->
+    <script>
+      window.onload = function () {
+        if (window.location.href.indexOf("acailly.github.io") !== -1) {
+          window.location.replace(
+            "https://shrink-my-video.herokuapp.com/shrink-my-video/"
+          );
+        }
+      };
+    </script>
+
     <header>
       <nav>
         <a href="https://acailly.github.io/shrink-my-video/"
@@ -161,12 +172,6 @@
           >Privacy note: The video stays on your computer, nothing is sent
           anywhere, it even works offline!</i
         >
-      </p>
-      <p>
-        <mark>UPDATE</mark> This tool may not work due to new browser
-        restriction with Web Assembly 😢 <br />
-        (confirmed in Firefox browser but the same issue is coming on Chrome
-        browser)
       </p>
     </header>
     <main>

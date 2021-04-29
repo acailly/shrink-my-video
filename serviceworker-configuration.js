@@ -1,4 +1,4 @@
 var serviceWorkerConfiguration = {
-  applicationVersion: "v5",
+  applicationVersion: "v6",
   corsProxyURL: "https://cors-anywhere.herokuapp.com/",
 };
