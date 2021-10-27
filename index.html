@@ -449,7 +449,7 @@
           <h2>What does it do?</h2>
         </header>
         <h3>
-          Apply settings from The Shift Project (720p, CRF 28, 160 kbits/s)
+          Apply settings from The Shift Project (720p, CRF 22, 160 kbits/s)
         </h3>
         <p>
           The Shift Project has published a guide for reducing the size of a
@@ -509,10 +509,9 @@
           to try these settings directly on your computer
         </p>
         <p>
-          <b
-            >Apply settings from The Shift Project (720p, CRF 28, 160
-            kbits/s)</b
-          >
+          <b>
+            Apply settings from The Shift Project (720p, CRF 22, 160 kbits/s)
+          </b>
         </p>
         <pre><code>ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4</code></pre>
         <p><b>Lower video resolution (480p)</b></p>
