@@ -130,6 +130,13 @@
     <!-- I put it here in case this works one day, it doesn't at the moment -->
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
+
+    <!-- Custom style -->
+    <style>
+      header > nav {
+        margin-bottom: 0em;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -248,10 +255,104 @@
             </p>
           </div>
         </form>
+        <header>
+          <p>
+            <sup>PRO TIP</sup>
+            <i>
+              Here are the ffmpeg settings which will be applied to your video :
+            </i>
+          </p>
+          <code id="applied-args"></code>
+        </header>
         <script src="ffmpeg.min.js"></script>
         <script>
           const { createFFmpeg, fetchFile } = FFmpeg;
           const ffmpeg = createFFmpeg({ log: true });
+
+          const lowVideoResolutionCheckbox = document.getElementById(
+            "lower-video-resolution"
+          );
+          lowVideoResolutionCheckbox.addEventListener("change", () =>
+            updateAppliedArgsLabel()
+          );
+          const lowVideoQualityCheckbox = document.getElementById(
+            "lower-video-quality"
+          );
+          lowVideoQualityCheckbox.addEventListener("change", () =>
+            updateAppliedArgsLabel()
+          );
+          const lowAudioBitrateCheckbox = document.getElementById(
+            "lower-audio-bitrate"
+          );
+          lowAudioBitrateCheckbox.addEventListener("change", () =>
+            updateAppliedArgsLabel()
+          );
+          const oneImageEvery5SecondsCheckbox = document.getElementById(
+            "image-every-5-seconds"
+          );
+          oneImageEvery5SecondsCheckbox.addEventListener("change", () =>
+            updateAppliedArgsLabel()
+          );
+          const blackAndWhiteCheckbox =
+            document.getElementById("black-and-white");
+          blackAndWhiteCheckbox.addEventListener("change", () =>
+            updateAppliedArgsLabel()
+          );
+          const appliedArgsLabel = document.getElementById("applied-args");
+          const extractArgsFromForm = () => {
+            let args = [];
+            // Settings from The Shift Project
+            //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
+            args.push("-c:v", "libx264");
+            // Low video resolution
+            //ffmpeg -i input.mp4 -s hd480 output.mp4
+            if (lowVideoResolutionCheckbox.checked) {
+              args.push("-s", "hd480");
+            } else {
+              args.push("-s", "hd720");
+            }
+            // Low video quality
+            //ffmpeg -i input.mp4 -crf 28 output.mp4
+            if (lowVideoQualityCheckbox.checked) {
+              args.push("-crf", "28");
+            } else {
+              args.push("-crf", "22");
+            }
+            // Low audio bitrate
+            //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
+            if (lowAudioBitrateCheckbox.checked) {
+              args.push("-c:a", "aac", "-b:a", "56k");
+            } else {
+              args.push("-c:a", "aac", "-b:a", "160k");
+            }
+            let videoFilter = "scale=iw*sar:ih,setsar=1";
+            // One image every 5 seconds
+            //ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4
+            if (oneImageEvery5SecondsCheckbox.checked) {
+              videoFilter = videoFilter.concat(",fps=fps=1/5");
+            }
+            // Black and white
+            //ffmpeg -i input.mp4 -vf "hue=s=0" output.mp4
+            if (blackAndWhiteCheckbox.checked) {
+              videoFilter = videoFilter.concat(",hue=s=0");
+            }
+            args.push("-vf", videoFilter);
+            args.push("output.mp4");
+            return args;
+          };
+          const updateAppliedArgsLabel = () => {
+            const additionalArgs = extractArgsFromForm()
+              // Little hack because no time
+              .map((arg) => {
+                if (arg.startsWith("scale=")) {
+                  return `\"${arg}\"`;
+                }
+                return arg;
+              });
+            const argArray = ["ffmpeg", "-i", "input.mp4", ...additionalArgs];
+            const args = argArray.join(" ");
+            appliedArgsLabel.innerText = args;
+          };
           const transcode = async () => {
             const startButton = document.getElementById("start-button");
             startButton.disabled = true;
@@ -269,59 +370,8 @@
               .replace(/[\u0300-\u036f]/g, "");
             await ffmpeg.load();
             ffmpeg.FS("writeFile", sanitizedName, await fetchFile(files[0]));
-            let args = ["-i", sanitizedName];
-            // Settings from The Shift Project
-            //ffmpeg -i input.mp4 -s hd720 -c:v libx264 -crf 22 -vf "scale=iw*sar:ih,setsar=1" -c:a aac -b:a 160k output.mp4
-            args.push("-c:v", "libx264");
-            // Low video resolution
-            //ffmpeg -i input.mp4 -s hd480 output.mp4
-            const lowVideoResolutionCheckbox = document.getElementById(
-              "lower-video-resolution"
-            );
-            if (lowVideoResolutionCheckbox.checked) {
-              args.push("-s", "hd480");
-            } else {
-              args.push("-s", "hd720");
-            }
-            // Low video quality
-            //ffmpeg -i input.mp4 -crf 28 output.mp4
-            const lowVideoQualityCheckbox = document.getElementById(
-              "lower-video-quality"
-            );
-            if (lowVideoQualityCheckbox.checked) {
-              args.push("-crf", "28");
-            } else {
-              args.push("-crf", "22");
-            }
-            // Low audio bitrate
-            //ffmpeg -i input.mp4 -c:a aac -b:a 56k output.mp4
-            const lowAudioBitrateCheckbox = document.getElementById(
-              "lower-audio-bitrate"
-            );
-            if (lowAudioBitrateCheckbox.checked) {
-              args.push("-c:a", "aac", "-b:a", "56k");
-            } else {
-              args.push("-c:a", "aac", "-b:a", "160k");
-            }
-            let videoFilter = "scale=iw*sar:ih,setsar=1";
-            // One image every 5 seconds
-            //ffmpeg -i input.mp4 -vf "fps=fps=1/5" output.mp4
-            const oneImageEvery5SecondsCheckbox = document.getElementById(
-              "image-every-5-seconds"
-            );
-            if (oneImageEvery5SecondsCheckbox.checked) {
-              videoFilter = videoFilter.concat(",fps=fps=1/5");
-            }
-            // Black and white
-            //ffmpeg -i input.mp4 -vf "hue=s=0" output.mp4
-            const blackAndWhiteCheckbox = document.getElementById(
-              "black-and-white"
-            );
-            if (blackAndWhiteCheckbox.checked) {
-              videoFilter = videoFilter.concat(",hue=s=0");
-            }
-            args.push("-vf", videoFilter);
-            args.push("output.mp4");
+            const additionalArgs = extractArgsFromForm();
+            const args = ["-i", sanitizedName, ...additionalArgs];
             console.log("Running FFMPEG command with args:", args);
             progress.style.display = "block";
             ffmpeg.setProgress(({ ratio }) => {
@@ -349,6 +399,7 @@
               e.preventDefault();
               transcode();
             });
+          updateAppliedArgsLabel();
         </script>
       </section>
       <hr />

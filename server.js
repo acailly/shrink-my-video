@@ -11,4 +11,7 @@ app.use((req, res, next) => {
 
 app.use("/shrink-my-video", express.static(__dirname));
 
-app.listen(process.env.PORT || 8080);
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Started. Go to http://localhost:${port}/shrink-my-video/`);
+});
