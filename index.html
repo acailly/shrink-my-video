@@ -558,6 +558,17 @@
     </footer>
     <script>
       window.addEventListener("load", () => {
+        // Redirect to Render app because Heroku app will be shut down
+        if (window.location.href.indexOf("heroku") !== -1) {
+          alert(
+            `THIS WEBSITE HAS MOVED!\nNo worries, you are going to be redirected to the new website.\nPlease update your bookmarks before the old website shuts down!`
+          );
+          window.location.replace(
+            "https://shrink-my-video.onrender.com/shrink-my-video/"
+          );
+          return;
+        }
+
         // Redirect to Render app while FFMPEG.WASM is not compatible with Github pages hosting
         if (window.location.href.indexOf("acailly.github.io") !== -1) {
           window.location.replace(
