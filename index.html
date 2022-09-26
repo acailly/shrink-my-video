@@ -558,10 +558,10 @@
     </footer>
     <script>
       window.addEventListener("load", () => {
-        // Redirect to heroku app while FFMPEG.WASM is not compatible with Github pages hosting
+        // Redirect to Render app while FFMPEG.WASM is not compatible with Github pages hosting
         if (window.location.href.indexOf("acailly.github.io") !== -1) {
           window.location.replace(
-            "https://shrink-my-video.herokuapp.com/shrink-my-video/"
+            "https://shrink-my-video.onrender.com/shrink-my-video/"
           );
           return;
         }
